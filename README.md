@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # RestClientTemplate [![Build Status](https://travis-ci.org/codepath/android-rest-client-template.svg?branch=master)](https://travis-ci.org/codepath/android-rest-client-template)
 
 ## Overview
@@ -256,3 +257,6 @@ client.clearAccessToken();
  * Is the `onLoginSuccess` method being executed in the `LoginActivity`. On launch of your app, be sure to start the app on the LoginActivity so authentication routines execute on launch and take you to the authenticated activity.
  * If you are plan to test with Android API 24 or above, you will need to use Chrome to launch the OAuth flow.  
  * Note that the emulators (both the Google-provided x86 and Genymotion versions) for API 24+ versions can introduce intermittent issues when initiating the OAuth flow for the first time.  For best results, use an device for this project.
+=======
+# TwitterClient
+>>>>>>> b969ddd77ccf2d1fc65e567028050f0872984288
