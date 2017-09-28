@@ -1,0 +1,43 @@
+<!-- fragment_edit_name.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/edit_name"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:layout_gravity="center" android:orientation="vertical"
+    android:minWidth="1000dp"
+    android:minHeight="450dp">
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:text="Begin Date"
+        android:textColor="@android:color/holo_blue_bright" />
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvDate"
+        android:clickable="true"
+        android:inputType="date"
+        android:focusable="false"
+        android:layout_centerHorizontal="true" />
+
+
+
+
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="SUBMIT"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
