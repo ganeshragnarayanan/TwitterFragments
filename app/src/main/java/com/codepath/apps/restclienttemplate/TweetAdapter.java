@@ -40,6 +40,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         Tweet tweet = mTweets.get(position);
         holder.tvUserName.setText(tweet.user.name);
         holder.tvBody.setText(tweet.body);
+        holder.tvDate.setText(tweet.dateFormatted);
 
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
     }
@@ -53,6 +54,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public ImageView ivProfileImage;
         public TextView tvUserName;
         public TextView tvBody;
+        public TextView tvDate;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -60,6 +62,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
             tvUserName = (TextView) itemView.findViewById(R.id.tvTwitterName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
+            tvDate = (TextView) itemView.findViewById(R.id.tvDate);
 
         }
     }

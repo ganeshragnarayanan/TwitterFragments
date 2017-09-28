@@ -12,6 +12,7 @@ import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
@@ -19,7 +20,7 @@ import java.util.Calendar;
 
 // ...
 
-public class EditNameDialogFragment extends DialogFragment  implements DatePickerDialog.OnDateSetListener /*implements OnEditorActionListener */ {
+public class EditNameDialogFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener /*implements OnEditorActionListener */ {
 
 
     String dateSelected;
@@ -37,7 +38,9 @@ public class EditNameDialogFragment extends DialogFragment  implements DatePicke
     public interface EditNameDialogListener {
         void onFinishEditDialog(String inputText);
     }
+
     private EditText mEditText;
+
     public EditNameDialogFragment() {
     }
 
@@ -59,68 +62,18 @@ public class EditNameDialogFragment extends DialogFragment  implements DatePicke
 
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        /*final EditText etDate = (EditText) view.findViewById(R.id.etDate);
 
+        final EditText etComposeTweet = (EditText) view.findViewById(R.id.etComposeTweet);
 
-        String filterDateValue = getArguments().getString("date");
-        String filterSortValue = getArguments().getString("sort");
-        Boolean filterArtsValue = getArguments().getBoolean("arts");
-        Boolean filterFashionValue = getArguments().getBoolean("fashion");
-        Boolean filterSportsValue = getArguments().getBoolean("sports");
+        Button btnTweet = (Button) view.findViewById(R.id.btnTweet);
 
-        etDate.setText(filterDateValue);
-
-        if (filterSortValue.equals("oldest")) {
-            filterOldest.setSelection(1);
-        } else if (filterSortValue.equals("newest")) {
-            filterOldest.setSelection(2);
-        }
-        else {
-            filterOldest.setSelection(0);
-        }
-
-        if (filterArtsValue) {
-            filterArts.setChecked(true);
-        }
-
-        if (filterFashionValue) {
-            filterFashion.setChecked(true);
-        }
-
-        if (filterSportsValue) {
-            filterSports.setChecked(true);
-        }
-
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
-
-        Button btnSubmit = (Button) view.findViewById(R.id.btnSubmit);
-        btnSubmit.requestFocus();
-
-        etDate.setOnClickListener (new View.OnClickListener() {
-
+        btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-
-        });
-
-        btnSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                boolean arts = false, fashion = false, sports = false;
-
-                String date = etDate.getText().toString();
-
-
-                ((SearchActivity) getActivity()).getResult(date,
-                        filterOldest.getSelectedItem().toString(), arts, fashion, sports);
-
+                String tweet = etComposeTweet.getText().toString();
+                ((TimelineActivity) getActivity()).getResult(tweet);
                 dismiss();
             }
-
-            DatePickerDialog.OnDateSetListener ondate = (view1, year, monthOfYear, dayOfMonth) -> {
-            };
-        });*/
+        });
     }
 }

@@ -15,29 +15,25 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:text="Begin Date"
+        android:text="Compose New Tweet"
         android:textColor="@android:color/holo_blue_bright" />
 
     <EditText
-        android:id="@+id/etDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/etComposeTweet"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="38dp"
         android:layout_below="@+id/tvDate"
-        android:clickable="true"
-        android:inputType="date"
-        android:focusable="false"
         android:layout_centerHorizontal="true" />
 
 
-
-
-
     <Button
-        android:id="@+id/btnSubmit"
+        android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:text="SUBMIT"
+        android:layout_marginTop="95dp"
+        android:text="TWEET"
+        android:layout_below="@+id/etComposeTweet"
         android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

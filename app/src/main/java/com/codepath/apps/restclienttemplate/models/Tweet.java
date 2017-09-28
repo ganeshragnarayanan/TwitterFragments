@@ -19,16 +19,21 @@ public class Tweet {
     public  long uid;
     public String createdAt;
     public User user;
+    public String dateFormatted;
+
     public static Tweet fromJSON(JSONObject jsonObject) throws JSONException {
         Tweet tweet = new Tweet();
 
         tweet.body = jsonObject.getString("text");
         tweet.uid = jsonObject.getLong("id");
         tweet.createdAt = jsonObject.getString("created_at");
-        Log.d("debug", "created_at");
-        Log.d("debug", tweet.createdAt);
+
         String dateFormatted = getRelativeTimeAgo(tweet.createdAt);
-        Log.d("debug", dateFormatted);
+        tweet.dateFormatted = dateFormatted;
+
+        Log.d("debug", "dateFormatted");
+        Log.d("debug", tweet.dateFormatted);
+
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         return tweet;
     }
@@ -47,6 +52,10 @@ public class Tweet {
             e.printStackTrace();
         }
 
-        return relativeDate;
+        int index = relativeDate.indexOf( ' ' );
+        String s1= relativeDate.substring(0, index);
+        String s2= relativeDate.substring(index+1, index+2);
+
+        return s1+s2;
     }
 }

@@ -33,6 +33,7 @@ public class TimelineActivity extends AppCompatActivity {
     RecyclerView rvTweets;
     private EndlessRecyclerViewScrollListener scrollListener;
 
+    long maxTweetID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,34 +96,39 @@ public class TimelineActivity extends AppCompatActivity {
         };
         rvTweets.addOnScrollListener(scrollListener);
         onPopulateTimeline();
-        postTweet();
-
 
     }
 
     public void loadNextDataFromApi(int offset) {
-        populateTimeline(offset);
+        populateTimeline(maxTweetID);
     }
 
     /* callback for the filters dialog */
-    public void getResult(String searchDate, String searchOrder, boolean arts, boolean fashion, boolean sports) {
+    public void getResult(String tweet) {
+
+        postTweet(tweet);
+        onPopulateTimeline();
+
 
     }
 
     public void onPopulateTimeline() {
 
-        /*tweets.clear();
+        tweets.clear();
         tweetAdapter.notifyDataSetChanged();
-        scrollListener.resetState();*/
+        scrollListener.resetState();
 
         populateTimeline(0);
     }
 
-    private void populateTimeline(int page) {
+    private void populateTimeline(long max_id) {
         RequestParams params = new RequestParams();
-        //params.put("count", 25);
-        params.put("since_id", 1);
-        params.put("page", page);
+        params.put("count", 25);
+        //params.put("since_id", 1);
+
+        if (max_id != 0) {
+            params.put("max_id", max_id);
+        }
         client.getHomeTimeline(params, new JsonHttpResponseHandler() {
 
             @Override
@@ -133,11 +139,23 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("debug", response.toString());
+                long minTweetID = 0;
                 for (int i=0;i<response.length();i++) {
                     try {
                         Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
+
+                        if (i==0) {
+                            minTweetID = tweet.uid;
+                        }
+                        if (tweet.uid < minTweetID) {
+                            minTweetID = tweet.uid;
+                        }
                         tweets.add(tweet);
                         tweetAdapter.notifyItemInserted(tweets.size()-1);
+                        maxTweetID = minTweetID;
+
+                        Log.d("debug", "maxTweetID");
+                        Log.d("debug", Long.toString(maxTweetID));
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -166,9 +184,9 @@ public class TimelineActivity extends AppCompatActivity {
         });
     }
 
-    private void postTweet() {
+    private void postTweet(String tweet) {
         Log.d("debug", "post_tweet");
-        client.postTweet(new JsonHttpResponseHandler() {
+        client.postTweet(tweet, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -178,7 +196,7 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("debug", response.toString());
-                for (int i=0;i<response.length();i++) {
+                /*for (int i=0;i<response.length();i++) {
                     try {
                         Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
                         tweets.add(tweet);
@@ -186,9 +204,7 @@ public class TimelineActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
-                }
+                }*/
             }
 
             @Override
@@ -219,14 +235,14 @@ public class TimelineActivity extends AppCompatActivity {
     private void showEditDialog() {
 
         FragmentManager fm = getSupportFragmentManager();
-        /*com.codepath.project.nytimessearch.fragments.EditNameDialogFragment editNameDialogFragment = com.codepath.project.nytimessearch.fragments.EditNameDialogFragment.newInstance("Filters");
+        EditNameDialogFragment editNameDialogFragment = EditNameDialogFragment.newInstance("Filters");
 
         Bundle args = new Bundle();
         args.putString("date", "test");
 
 
         editNameDialogFragment.setArguments(args);
-        editNameDialogFragment.show(fm, "fragment_edit_name");*/
+        editNameDialogFragment.show(fm, "fragment_edit_name");
 
     }
 }
