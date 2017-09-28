@@ -9,12 +9,16 @@ import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -24,6 +28,24 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
 
     String dateSelected;
+
+    TextView mEditText;
+    private final TextWatcher mTextEditorWatcher = new TextWatcher() {
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            //This sets a textview to the current length
+            mEditText.setText(Integer.toString(140-start));
+            Log.d("debug", Integer.toString(start));
+            Log.d("debug", Integer.toString(before));
+            Log.d("debug", Integer.toString(count));
+        }
+
+        public void afterTextChanged(Editable s) {
+        }
+    };
 
     // handle the date selected
     @Override
@@ -39,7 +61,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
         void onFinishEditDialog(String inputText);
     }
 
-    private EditText mEditText;
+
 
     public EditNameDialogFragment() {
     }
@@ -65,8 +87,12 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
         final EditText etComposeTweet = (EditText) view.findViewById(R.id.etComposeTweet);
 
-        Button btnTweet = (Button) view.findViewById(R.id.btnTweet);
+        mEditText = (TextView) view.findViewById(R.id.mTextView);
 
+
+        etComposeTweet.addTextChangedListener(mTextEditorWatcher);
+
+        Button btnTweet = (Button) view.findViewById(R.id.btnTweet);
         btnTweet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,4 +102,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             }
         });
     }
+
+
 }

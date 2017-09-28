@@ -28,6 +28,8 @@
         android:layout_toEndOf="@+id/ivProfileImage"
         android:layout_marginLeft="5dp"
         android:text="TextView"
+        android:autoLink="all"
+        android:linksClickable="true"
         android:layout_alignBottom="@+id/ivProfileImage" />
 
     <TextView
@@ -37,5 +39,6 @@
         android:layout_marginLeft="5dp"
         android:text="TextView"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        />
 </RelativeLayout>

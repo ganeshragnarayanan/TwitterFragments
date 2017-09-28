@@ -8,6 +8,8 @@
     android:minWidth="1000dp"
     android:minHeight="450dp">
 
+
+
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="wrap_content"
@@ -27,6 +29,8 @@
         android:layout_centerHorizontal="true" />
 
 
+
+
     <Button
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
@@ -35,5 +39,13 @@
         android:text="TWEET"
         android:layout_below="@+id/etComposeTweet"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:id="@+id/mTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnTweet"
+        android:layout_toStartOf="@+id/tvDate"
+        android:text="TextView" />
 
 </RelativeLayout>
