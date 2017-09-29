@@ -18,7 +18,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.Calendar;
 
@@ -70,6 +73,10 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
         EditNameDialogFragment frag = new EditNameDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
+
+
+
+
         frag.setArguments(args);
         return frag;
     }
@@ -77,6 +84,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        getDialog().setTitle("Compose Tweet");
         return inflater.inflate(R.layout.fragment_edit_name, container);
     }
 
@@ -85,10 +93,19 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        String userName = getArguments().getString("name");
+        String screenName = getArguments().getString("screen_name");
+        String imageURL = getArguments().getString("profile_url");
+
         final EditText etComposeTweet = (EditText) view.findViewById(R.id.etComposeTweet);
 
-        mEditText = (TextView) view.findViewById(R.id.mTextView);
+        final ImageView ivImage = (ImageView) view.findViewById(R.id.ivImage);
+        final TextView tvName = (TextView) view.findViewById(R.id.tvName);
 
+        Glide.with(this).load(imageURL).into(ivImage);
+        tvName.setText(userName);
+
+        mEditText = (TextView) view.findViewById(R.id.mTextView);
 
         etComposeTweet.addTextChangedListener(mTextEditorWatcher);
 
@@ -98,6 +115,14 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             public void onClick(View v) {
                 String tweet = etComposeTweet.getText().toString();
                 ((TimelineActivity) getActivity()).getResult(tweet);
+                dismiss();
+            }
+        });
+
+        Button btnCancel = (Button) view.findViewById(R.id.btnCancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });

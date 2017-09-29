@@ -1,6 +1,7 @@
 package com.codepath.apps.restclienttemplate;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,8 +40,11 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
     public void onBindViewHolder(ViewHolder holder, int position) {
         Tweet tweet = mTweets.get(position);
         holder.tvUserName.setText(tweet.user.name);
+        holder.tvUserName.setTypeface(null, Typeface.BOLD);
+
         holder.tvBody.setText(tweet.body);
         holder.tvDate.setText(tweet.dateFormatted);
+        holder.tvScreenName.setText(" @" + tweet.user.screenName);
 
         Glide.with(context).load(tweet.user.profileImageUrl).into(holder.ivProfileImage);
     }
@@ -55,14 +59,16 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         public TextView tvUserName;
         public TextView tvBody;
         public TextView tvDate;
+        public TextView tvScreenName;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivProfileImage);
-            tvUserName = (TextView) itemView.findViewById(R.id.tvTwitterName);
+            ivProfileImage = (ImageView) itemView.findViewById(R.id.ivImage);
+            tvUserName = (TextView) itemView.findViewById(R.id.tvName);
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
+            tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
 
         }
     }
