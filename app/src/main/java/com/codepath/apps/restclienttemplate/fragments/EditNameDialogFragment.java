@@ -22,10 +22,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.Activities.TimelineActivity;
+import com.codepath.apps.restclienttemplate.Application.TwitterApp;
+import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.net.TwitterClient;
+import com.loopj.android.http.JsonHttpResponseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.Calendar;
+
+import cz.msebera.android.httpclient.Header;
 
 // ...
 
@@ -33,6 +41,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
 
     String dateSelected;
+    private TwitterClient client;
 
     TextView mEditText;
     private final TextWatcher mTextEditorWatcher = new TextWatcher() {
@@ -112,6 +121,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             @Override
             public void onClick(View v) {
                 String tweet = etComposeTweet.getText().toString();
+                postTweet(tweet);
                 ((TimelineActivity) getActivity()).getResult(tweet);
                 dismiss();
             }
@@ -122,6 +132,42 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             @Override
             public void onClick(View v) {
                 dismiss();
+            }
+        });
+    }
+
+    private void postTweet(String tweet) {
+        Log.d("debug", "post_tweet");
+        client = TwitterApp.getRestClient();
+        client.postTweet(tweet, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("debug", response.toString());
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d("debug", response.toString());
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("debug", responseString);
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                Log.d("debug", errorResponse.toString());
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("debug", errorResponse.toString());
+                throwable.printStackTrace();
             }
         });
     }

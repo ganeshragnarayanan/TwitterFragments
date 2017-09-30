@@ -17,14 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.codepath.apps.restclienttemplate.utils.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.restclienttemplate.Application.TwitterApp;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.adapters.TweetAdapter;
-import com.codepath.apps.restclienttemplate.Application.TwitterApp;
-import com.codepath.apps.restclienttemplate.net.TwitterClient;
 import com.codepath.apps.restclienttemplate.fragments.EditNameDialogFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
+import com.codepath.apps.restclienttemplate.net.TwitterClient;
+import com.codepath.apps.restclienttemplate.utils.EndlessRecyclerViewScrollListener;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -43,6 +43,7 @@ public class TimelineActivity extends AppCompatActivity {
     ArrayList<Tweet> tweets;
     RecyclerView rvTweets;
     private EndlessRecyclerViewScrollListener scrollListener;
+    LinearLayoutManager linearLayoutManager;
 
     long maxTweetID = 0;
     private SwipeRefreshLayout swipeContainer;
@@ -51,6 +52,7 @@ public class TimelineActivity extends AppCompatActivity {
     String userName;
     String screenName;
     String imageURL;
+    long userUID;
 
 
     @Override
@@ -113,7 +115,7 @@ public class TimelineActivity extends AppCompatActivity {
 
         rvTweets.setAdapter(tweetAdapter);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(this);
         rvTweets.setLayoutManager(linearLayoutManager);
 
         RecyclerView.ItemDecoration itemDecoration = new
@@ -139,10 +141,35 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     /* callback for the filters dialog */
-    public void getResult(String tweet) {
+    public void getResult(String tweetString) {
 
-        postTweet(tweet);
-        makeDelayedTweetRequests();
+        //postTweet(tweetString);
+        //makeDelayedTweetRequests();
+
+        Tweet tweet = new Tweet();
+
+        tweet.body = tweetString;
+        tweet.uid = userUID;
+        tweet.createdAt = "0s";
+
+        User user = new User();
+        user.name = userName;
+        user.screenName = screenName;
+        user.profileImageUrl = imageURL;
+        user.uid = userUID;
+
+        tweet.user = user;
+
+        Log.d("debug", "size_1");
+        Log.d("debug", Integer.toString(tweets.size()));
+
+        tweets.add(0, tweet);
+        Log.d("debug", "size_2");
+        Log.d("debug", Integer.toString(tweets.size()));
+
+        tweetAdapter.notifyDataSetChanged();
+        linearLayoutManager.scrollToPositionWithOffset(0, 0);
+        //tweetAdapter.notifyItemInserted(tweets.size()-1);
     }
 
     public void onPopulateTimeline() {
@@ -168,6 +195,7 @@ public class TimelineActivity extends AppCompatActivity {
                     userName = user.name;
                     screenName = user.screenName;
                     imageURL = user.profileImageUrl;
+                    userUID = user.uid;
 
                 } catch (JSONException e) {
                     e.printStackTrace();

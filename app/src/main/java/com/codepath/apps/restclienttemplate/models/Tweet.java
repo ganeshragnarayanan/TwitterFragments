@@ -68,6 +68,6 @@ public class Tweet {
 
             return s1 + s2;
         }
-        return "";
+        return relativeDate;
     }
 }
