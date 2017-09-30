@@ -6,6 +6,7 @@
     android:id="@+id/edit_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/activity_horizontal_margin"
     android:layout_gravity="center"
     android:minHeight="450dp"
     android:minWidth="1000dp"
@@ -15,9 +16,10 @@
         android:id="@+id/ivImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_alignParentStart="true"
+        app:srcCompat="@android:color/black"
         android:layout_alignParentTop="true"
-        app:srcCompat="@android:color/black" />
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:id="@+id/tvName"
@@ -32,39 +34,45 @@
         android:id="@+id/etComposeTweet"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_below="@+id/tvDate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="81dp"
+
         android:gravity="top|left"
         android:inputType="textMultiLine"
-        android:lines="8"
+        android:lines="10"
         android:maxLines="10"
         android:minLines="10"
-        android:scrollbars="vertical" />
+        android:scrollbars="vertical"
+        android:layout_below="@+id/ivImage"
+        android:layout_alignParentStart="true" />
 
 
     <Button
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="46dp"
+        android:text="TWEET"
         android:layout_below="@+id/etComposeTweet"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="95dp"
-        android:text="TWEET" />
+        android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/mTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/etComposeTweet"
-        android:layout_toStartOf="@+id/tvDate" />
+
+
 
     <Button
         android:id="@+id/btnCancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/btnTweet"
-        android:layout_toEndOf="@+id/etComposeTweet"
-        android:text="Cancel" />
+        android:layout_alignBottom="@+id/btnTweet"
+        android:layout_marginStart="19dp"
+        android:layout_toEndOf="@+id/btnTweet"
+        android:text="CANCEL" />
+
+    <TextView
+        android:id="@+id/mTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/btnTweet"
+        android:layout_marginBottom="12dp"
+        android:layout_toStartOf="@+id/btnTweet"
+        android:text="TextView" />
 
 </RelativeLayout>

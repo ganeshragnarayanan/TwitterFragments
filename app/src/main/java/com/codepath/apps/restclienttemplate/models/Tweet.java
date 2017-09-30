@@ -52,6 +52,14 @@ public class Tweet {
             e.printStackTrace();
         }
 
+        Log.d("debug", "relativeDate");
+        Log.d("debug", relativeDate);
+
+        if (relativeDate.indexOf("in ") == 0) {
+            relativeDate = relativeDate.substring(3, relativeDate.length());
+        }
+
+
         int index = relativeDate.indexOf( ' ' );
         String s1= relativeDate.substring(0, index);
         String s2= relativeDate.substring(index+1, index+2);
