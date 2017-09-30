@@ -61,9 +61,13 @@ public class Tweet {
 
 
         int index = relativeDate.indexOf( ' ' );
-        String s1= relativeDate.substring(0, index);
-        String s2= relativeDate.substring(index+1, index+2);
 
-        return s1+s2;
+        if (index != -1) {
+            String s1 = relativeDate.substring(0, index);
+            String s2 = relativeDate.substring(index + 1, index + 2);
+
+            return s1 + s2;
+        }
+        return "";
     }
 }
