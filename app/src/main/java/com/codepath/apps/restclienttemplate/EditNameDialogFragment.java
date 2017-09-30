@@ -84,7 +84,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getDialog().setTitle("    Compose Tweet");
+        getDialog().setTitle("           Compose Tweet");
 
         return inflater.inflate(R.layout.fragment_edit_name, container);
     }

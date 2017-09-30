@@ -3,13 +3,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/edit_name"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="@dimen/activity_horizontal_margin"
     android:layout_gravity="center"
     android:minHeight="450dp"
-    android:minWidth="1000dp"
+    android:minWidth="1300dp"
     android:orientation="vertical">
 
     <ImageView
@@ -33,8 +34,8 @@
     <EditText
         android:id="@+id/etComposeTweet"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-
+        android:layout_height="280dp"
+        android:layout_marginTop="20dp"
         android:gravity="top|left"
         android:inputType="textMultiLine"
         android:lines="10"
@@ -49,12 +50,12 @@
         android:id="@+id/btnTweet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="46dp"
-        android:text="TWEET"
         android:layout_below="@+id/etComposeTweet"
-        android:layout_centerHorizontal="true" />
-
-
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/holo_blue_light"
+        android:text="TWEET"
+        android:textColor="@android:color/white" />
 
 
     <Button
@@ -64,7 +65,9 @@
         android:layout_alignBottom="@+id/btnTweet"
         android:layout_marginStart="19dp"
         android:layout_toEndOf="@+id/btnTweet"
-        android:text="CANCEL" />
+        android:background="@android:color/holo_blue_light"
+        android:text="CANCEL"
+        android:textColor="@android:color/white" />
 
     <TextView
         android:id="@+id/mTextView"
@@ -73,6 +76,6 @@
         android:layout_alignBottom="@+id/btnTweet"
         android:layout_marginBottom="12dp"
         android:layout_toStartOf="@+id/btnTweet"
-        android:text="TextView" />
+        android:layout_marginEnd="10dp"/>
 
 </RelativeLayout>
