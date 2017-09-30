@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.utils;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -106,7 +106,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
 
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
-            //Log.d("debug", "loading more ##########################################");
+            Log.d("debug", "loading more ##########################################");
             onLoadMore(currentPage, totalItemCount, view);
             loading = true;
         }

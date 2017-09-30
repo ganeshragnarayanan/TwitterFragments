@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.Activities;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -17,6 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.codepath.apps.restclienttemplate.utils.EndlessRecyclerViewScrollListener;
+import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.adapters.TweetAdapter;
+import com.codepath.apps.restclienttemplate.Application.TwitterApp;
+import com.codepath.apps.restclienttemplate.net.TwitterClient;
+import com.codepath.apps.restclienttemplate.fragments.EditNameDialogFragment;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -63,16 +69,10 @@ public class TimelineActivity extends AppCompatActivity {
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d("debug", "refresh");
                 tweets.clear();
                 tweetAdapter.notifyDataSetChanged();
                 scrollListener.resetState();
-
                 populateTimeline(0);
-                // Your code to refresh the list here.
-                // Make sure you call swipeContainer.setRefreshing(false)
-                // once the network request has completed successfully.
-               // fetchTimelineAsync(0);
             }
         });
         // Configure the refreshing colors
@@ -80,7 +80,6 @@ public class TimelineActivity extends AppCompatActivity {
                 android.R.color.holo_green_light,
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
-
     }
 
     @Override
@@ -111,7 +110,7 @@ public class TimelineActivity extends AppCompatActivity {
         rvTweets = (RecyclerView) findViewById(R.id.rvTweet);
         tweets = new ArrayList<>();
         tweetAdapter = new TweetAdapter(tweets);
-        //rvTweets.setLayoutManager(new LinearLayoutManager(this));
+
         rvTweets.setAdapter(tweetAdapter);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -130,7 +129,6 @@ public class TimelineActivity extends AppCompatActivity {
             }
         };
         rvTweets.addOnScrollListener(scrollListener);
-        //onPopulateTimeline();
         getCurrentUser();
         makeDelayedTweetRequests();
 
@@ -144,10 +142,7 @@ public class TimelineActivity extends AppCompatActivity {
     public void getResult(String tweet) {
 
         postTweet(tweet);
-        //onPopulateTimeline();
         makeDelayedTweetRequests();
-
-
     }
 
     public void onPopulateTimeline() {
@@ -173,7 +168,6 @@ public class TimelineActivity extends AppCompatActivity {
                     userName = user.name;
                     screenName = user.screenName;
                     imageURL = user.profileImageUrl;
-                    Log.d("debug", "test");
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -218,7 +212,7 @@ public class TimelineActivity extends AppCompatActivity {
     private void populateTimeline(long max_id) {
         RequestParams params = new RequestParams();
         params.put("count", 25);
-        //params.put("since_id", 1);
+        params.put("since_id", 1);
 
         if (max_id != 0) {
             params.put("max_id", max_id);
@@ -264,18 +258,21 @@ public class TimelineActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("debug", responseString);
                 throwable.printStackTrace();
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 Log.d("debug", errorResponse.toString());
                 throwable.printStackTrace();
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("debug", errorResponse.toString());
                 throwable.printStackTrace();
+                swipeContainer.setRefreshing(false);
             }
         });
     }
@@ -287,20 +284,13 @@ public class TimelineActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("debug", response.toString());
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("debug", response.toString());
-                /*for (int i=0;i<response.length();i++) {
-                    try {
-                        Tweet tweet = Tweet.fromJSON(response.getJSONObject(i));
-                        tweets.add(tweet);
-                        tweetAdapter.notifyItemInserted(tweets.size()-1);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }*/
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
@@ -332,6 +322,7 @@ public class TimelineActivity extends AppCompatActivity {
 
                 Toast toast = Toast.makeText(context, text, duration);
                 toast.show();
+                swipeContainer.setRefreshing(false);
             }
         });
     }

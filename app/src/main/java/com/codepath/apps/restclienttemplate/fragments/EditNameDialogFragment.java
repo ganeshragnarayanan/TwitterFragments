@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.fragments;
 
 
 /**
@@ -22,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.Activities.TimelineActivity;
 
 import java.util.Calendar;
 
@@ -65,7 +67,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     }
 
 
-
     public EditNameDialogFragment() {
     }
 
@@ -73,10 +74,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
         EditNameDialogFragment frag = new EditNameDialogFragment();
         Bundle args = new Bundle();
         args.putString("title", title);
-
-
-
-
         frag.setArguments(args);
         return frag;
     }
@@ -128,6 +125,4 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             }
         });
     }
-
-
 }

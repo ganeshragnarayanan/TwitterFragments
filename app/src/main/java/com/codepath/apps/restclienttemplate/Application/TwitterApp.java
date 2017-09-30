@@ -1,8 +1,9 @@
-package com.codepath.apps.restclienttemplate;
+package com.codepath.apps.restclienttemplate.Application;
 
 import android.app.Application;
 import android.content.Context;
 
+import com.codepath.apps.restclienttemplate.net.TwitterClient;
 import com.raizlabs.android.dbflow.config.FlowConfig;
 import com.raizlabs.android.dbflow.config.FlowLog;
 import com.raizlabs.android.dbflow.config.FlowManager;
@@ -26,10 +27,10 @@ public class TwitterApp extends Application {
 		FlowManager.init(new FlowConfig.Builder(this).build());
 		FlowLog.setMinimumLoggingLevel(FlowLog.Level.V);
 
-		com.codepath.apps.restclienttemplate.TwitterApp.context = this;
+		TwitterApp.context = this;
 	}
 
 	public static TwitterClient getRestClient() {
-		return (TwitterClient) com.codepath.apps.restclienttemplate.TwitterClient.getInstance(TwitterClient.class, com.codepath.apps.restclienttemplate.TwitterApp.context);
+		return (TwitterClient) TwitterClient.getInstance(TwitterClient.class, TwitterApp.context);
 	}
 }
