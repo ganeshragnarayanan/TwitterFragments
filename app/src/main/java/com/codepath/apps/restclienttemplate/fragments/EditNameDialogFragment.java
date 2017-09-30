@@ -6,6 +6,7 @@ package com.codepath.apps.restclienttemplate.fragments;
  */
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
@@ -25,10 +26,12 @@ import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.Activities.TimelineActivity;
 import com.codepath.apps.restclienttemplate.Application.TwitterApp;
 import com.codepath.apps.restclienttemplate.R;
+import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.net.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
@@ -51,7 +54,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             //This sets a textview to the current length
-            mEditText.setText(Integer.toString(140-start));
+            mEditText.setText(Integer.toString(140 - start));
             Log.d("debug", Integer.toString(start));
             Log.d("debug", Integer.toString(before));
             Log.d("debug", Integer.toString(count));
@@ -121,8 +124,10 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             @Override
             public void onClick(View v) {
                 String tweet = etComposeTweet.getText().toString();
-                postTweet(tweet);
-                ((TimelineActivity) getActivity()).getResult(tweet);
+
+                // ((TimelineActivity) getActivity()).getResult(tweet);
+                Context context = getActivity();
+                postTweet(tweet, context);
                 dismiss();
             }
         });
@@ -136,7 +141,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
         });
     }
 
-    private void postTweet(String tweet) {
+    private void postTweet(final String tweet, final Context context) {
         Log.d("debug", "post_tweet");
         client = TwitterApp.getRestClient();
         client.postTweet(tweet, new JsonHttpResponseHandler() {
@@ -144,6 +149,14 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 Log.d("debug", response.toString());
+
+                try {
+                    Tweet tweetObj = Tweet.fromJSON(response);
+                    Log.d("debug", "tweetPost");
+                    ((TimelineActivity) context).getResult(tweet, tweetObj);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override

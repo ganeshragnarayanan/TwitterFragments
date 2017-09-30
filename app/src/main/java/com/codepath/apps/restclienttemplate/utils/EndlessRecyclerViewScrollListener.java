@@ -4,7 +4,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.Log;
 
 /**
  * Created by GANESH on 9/19/17.
@@ -57,7 +56,7 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
     // but first we check if we are waiting for the previous load to finish.
     @Override
     public void onScrolled(RecyclerView view, int dx, int dy) {
-        Log.d("debug", "onScrolled");
+        //Log.d("debug", "onScrolled");
         int lastVisibleItemPosition = 0;
         int totalItemCount = mLayoutManager.getItemCount();
 
@@ -94,19 +93,19 @@ public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnS
         // the visibleThreshold and need to reload more data.
         // If we do need to reload some more data, we execute onLoadMore to fetch the data.
         // threshold should reflect how many total columns there are too
-        Log.d("debug", "lastVisibleItemPosition");
-        Log.d("debug", Integer.toString(lastVisibleItemPosition));
-        Log.d("debug", "visibleThreshold");
-        Log.d("debug", Integer.toString(visibleThreshold));
-        Log.d("debug", "totalItemCount");
-        Log.d("debug", Integer.toString(totalItemCount));
-        Log.d("debug", "loading");
-        Log.d("debug", Boolean.toString(loading));
+        //Log.d("debug", "lastVisibleItemPosition");
+        //Log.d("debug", Integer.toString(lastVisibleItemPosition));
+        //Log.d("debug", "visibleThreshold");
+        //Log.d("debug", Integer.toString(visibleThreshold));
+        //Log.d("debug", "totalItemCount");
+        //Log.d("debug", Integer.toString(totalItemCount));
+        //Log.d("debug", "loading");
+        //Log.d("debug", Boolean.toString(loading));
 
 
         if (!loading && (lastVisibleItemPosition + visibleThreshold) > totalItemCount) {
             currentPage++;
-            Log.d("debug", "loading more ##########################################");
+            //Log.d("debug", "loading more ##########################################");
             onLoadMore(currentPage, totalItemCount, view);
             loading = true;
         }

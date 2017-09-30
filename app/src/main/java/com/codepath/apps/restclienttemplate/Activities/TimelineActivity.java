@@ -141,7 +141,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     /* callback for the filters dialog */
-    public void getResult(String tweetString) {
+    public void getResult(String tweetString, Tweet tweetObj) {
 
         //postTweet(tweetString);
         //makeDelayedTweetRequests();
@@ -163,7 +163,8 @@ public class TimelineActivity extends AppCompatActivity {
         Log.d("debug", "size_1");
         Log.d("debug", Integer.toString(tweets.size()));
 
-        tweets.add(0, tweet);
+        //tweets.add(0, tweet);
+        tweets.add(0, tweetObj);
         Log.d("debug", "size_2");
         Log.d("debug", Integer.toString(tweets.size()));
 
