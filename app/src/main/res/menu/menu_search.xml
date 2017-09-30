@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/miProfile"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/twitter_compose"
         android:onClick="onComposeAction"
         android:orderInCategory="6"
         android:title="Profile"
