@@ -136,7 +136,7 @@ public class TimelineActivity extends AppCompatActivity {
     }
 
     public void loadNextDataFromApi(int offset) {
-        populateTimeline(maxTweetID);
+        populateTimeline(maxTweetID-1);
     }
 
     /* callback for the filters dialog */
