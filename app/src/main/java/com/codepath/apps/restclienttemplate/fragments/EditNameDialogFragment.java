@@ -55,9 +55,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
             //This sets a textview to the current length
             mEditText.setText(Integer.toString(140 - start));
-            Log.d("debug", Integer.toString(start));
-            Log.d("debug", Integer.toString(before));
-            Log.d("debug", Integer.toString(count));
         }
 
         public void afterTextChanged(Editable s) {
@@ -125,7 +122,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             public void onClick(View v) {
                 String tweet = etComposeTweet.getText().toString();
 
-                // ((TimelineActivity) getActivity()).getResult(tweet);
                 Context context = getActivity();
                 postTweet(tweet, context);
                 dismiss();
@@ -142,7 +138,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     }
 
     private void postTweet(final String tweet, final Context context) {
-        Log.d("debug", "post_tweet");
         client = TwitterApp.getRestClient();
         client.postTweet(tweet, new JsonHttpResponseHandler() {
 
@@ -152,7 +147,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
                 try {
                     Tweet tweetObj = Tweet.fromJSON(response);
-                    Log.d("debug", "tweetPost");
                     ((TimelineActivity) context).getResult(tweet, tweetObj);
                 } catch (JSONException e) {
                     e.printStackTrace();

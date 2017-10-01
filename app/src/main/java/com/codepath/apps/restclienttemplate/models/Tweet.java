@@ -1,13 +1,13 @@
 package com.codepath.apps.restclienttemplate.models;
 
 import android.text.format.DateUtils;
-import android.util.Log;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Locale;
-import java.text.*;
 
 /**
  * Created by GANESH on 9/27/17.
@@ -31,9 +31,6 @@ public class Tweet {
         String dateFormatted = getRelativeTimeAgo(tweet.createdAt);
         tweet.dateFormatted = dateFormatted;
 
-        Log.d("debug", "dateFormatted");
-        Log.d("debug", tweet.dateFormatted);
-
         tweet.user = User.fromJSON(jsonObject.getJSONObject("user"));
         return tweet;
     }
@@ -51,9 +48,6 @@ public class Tweet {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-        Log.d("debug", "relativeDate");
-        Log.d("debug", relativeDate);
 
         if (relativeDate.indexOf("in ") == 0) {
             relativeDate = relativeDate.substring(3, relativeDate.length());

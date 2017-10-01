@@ -15,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.codepath.apps.restclienttemplate.Application.TwitterApp;
 import com.codepath.apps.restclienttemplate.R;
@@ -143,34 +142,10 @@ public class TimelineActivity extends AppCompatActivity {
     /* callback for the filters dialog */
     public void getResult(String tweetString, Tweet tweetObj) {
 
-        //postTweet(tweetString);
-        //makeDelayedTweetRequests();
-
-        Tweet tweet = new Tweet();
-
-        tweet.body = tweetString;
-        tweet.uid = userUID;
-        tweet.createdAt = "0s";
-
-        User user = new User();
-        user.name = userName;
-        user.screenName = screenName;
-        user.profileImageUrl = imageURL;
-        user.uid = userUID;
-
-        tweet.user = user;
-
-        Log.d("debug", "size_1");
-        Log.d("debug", Integer.toString(tweets.size()));
-
-        //tweets.add(0, tweet);
         tweets.add(0, tweetObj);
-        Log.d("debug", "size_2");
-        Log.d("debug", Integer.toString(tweets.size()));
-
         tweetAdapter.notifyDataSetChanged();
         linearLayoutManager.scrollToPositionWithOffset(0, 0);
-        //tweetAdapter.notifyItemInserted(tweets.size()-1);
+
     }
 
     public void onPopulateTimeline() {
@@ -278,8 +253,6 @@ public class TimelineActivity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-
-
                 }
             }
 
@@ -301,56 +274,6 @@ public class TimelineActivity extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("debug", errorResponse.toString());
                 throwable.printStackTrace();
-                swipeContainer.setRefreshing(false);
-            }
-        });
-    }
-
-    private void postTweet(String tweet) {
-        Log.d("debug", "post_tweet");
-        client.postTweet(tweet, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("debug", response.toString());
-                swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("debug", response.toString());
-                swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("debug", responseString);
-                throwable.printStackTrace();
-                generateToast();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                generateToast();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                generateToast();
-            }
-
-            public void generateToast() {
-                Context context = getApplicationContext();
-                CharSequence text = "Error loading page" +
-                        "!";
-                int duration = Toast.LENGTH_SHORT;
-
-                Toast toast = Toast.makeText(context, text, duration);
-                toast.show();
                 swipeContainer.setRefreshing(false);
             }
         });
