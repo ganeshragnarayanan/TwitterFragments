@@ -23,8 +23,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
 
     private List<Tweet> mTweets;
     Context context;
-    public TweetAdapter(List <Tweet> tweets) {
+    private TweetAdapterListener mListener;
+
+
+    public interface TweetAdapterListener {
+        public void onItemSelected(View view, int position);
+    }
+
+
+    public TweetAdapter(List <Tweet> tweets, TweetAdapterListener listener) {
+
         mTweets = tweets;
+        mListener = listener;
     }
 
     @Override
@@ -55,7 +65,7 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
         return mTweets.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public  class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView ivProfileImage;
         public TextView tvUserName;
         public TextView tvBody;
@@ -70,6 +80,18 @@ public class TweetAdapter extends RecyclerView.Adapter<TweetAdapter.ViewHolder> 
             tvBody = (TextView) itemView.findViewById(R.id.tvBody);
             tvDate = (TextView) itemView.findViewById(R.id.tvDate);
             tvScreenName = (TextView) itemView.findViewById(R.id.tvScreenName);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+
+
+                @Override
+                public void onClick(View v) {
+                    if (mListener != null) {
+                        int position = getAdapterPosition();
+                        mListener.onItemSelected(v, position);
+                    }
+                }
+            });
 
         }
     }
