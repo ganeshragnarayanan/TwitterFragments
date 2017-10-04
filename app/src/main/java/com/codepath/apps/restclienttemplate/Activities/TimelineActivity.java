@@ -27,7 +27,7 @@ import com.codepath.apps.restclienttemplate.fragments1.TweetsListFragment;
 import com.codepath.apps.restclienttemplate.fragments1.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 
-public class TimelineActivity extends AppCompatActivity implements TweetsListFragment.TweetSelectedListener {
+public class TimelineActivity extends AppCompatActivity implements TweetsListFragment.TweetSelectedListener,com.codepath.apps.restclienttemplate.fragments.EditNameDialogFragment.EditNameDialogListener{
 
 
     long maxTweetID = 0;
@@ -180,7 +180,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         Toast.makeText(this, tweet.body, Toast.LENGTH_SHORT);
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("uid", tweet.user.uid);
-        i.putExtra("screenName", tweet.user.screenName);
+        i.putExtra("screen_name", tweet.user.screenName);
         i.putExtra("followers", tweet.user.followersCount);
         i.putExtra("following", tweet.user.followingCount);
         i.putExtra("description", tweet.user.tagLine);
@@ -188,5 +188,15 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         i.putExtra("profileURL", tweet.user.profileImageUrl);
 
         startActivity(i);
+    }
+
+    @Override
+    public void onFinishEditDialog(Tweet tweetObj) {
+
+        Toast.makeText(this, "Hi, " , Toast.LENGTH_SHORT).show();
+        HomeTimelineFragment fragment = (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+        fragment.fromMainActivity(tweetObj);
+        vpPager.setCurrentItem(0);
+
     }
 }

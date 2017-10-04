@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.codepath.apps.restclienttemplate.Activities.TimelineActivity;
 import com.codepath.apps.restclienttemplate.Application.TwitterApp;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -54,6 +53,12 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     String userGlobal;
     String imageGlobal;
 
+    public interface EditNameDialogListener {
+
+        void onFinishEditDialog(Tweet tweet);
+
+    }
+
     public interface TweetSelectedListener {
         public void onTweetSelected(Tweet tweet);
     }
@@ -83,9 +88,9 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
     }
 
-    public interface EditNameDialogListener {
+    /*public interface EditNameDialogListener {
         void onFinishEditDialog(String inputText);
-    }
+    }*/
 
 
     public EditNameDialogFragment() {
@@ -162,7 +167,13 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
                 try {
                     Tweet tweetObj = Tweet.fromJSON(response);
-                    ((TimelineActivity) context).getResult(tweet, tweetObj);
+                    //((TimelineActivity) context).getResult(tweet, tweetObj);
+
+                    //newly added
+                    EditNameDialogListener listener = (EditNameDialogListener) context;
+                    listener.onFinishEditDialog(tweetObj);
+
+
                     //((TweetSelectedListener) getActivity()).onTweetSelected(tweetObj);
                 } catch (JSONException e) {
                     e.printStackTrace();

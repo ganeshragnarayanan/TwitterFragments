@@ -50,7 +50,7 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
 
         Intent intent = getIntent();
         long uid = intent.getLongExtra("uid", 0);
-        String screen_name = intent.getStringExtra("screenName");
+        String screen_name = intent.getStringExtra("screen_name");
 
         String profileImageUrl;
         String tagLine = intent.getStringExtra("description");
@@ -59,7 +59,7 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
         int followersCount = intent.getIntExtra("followers", 0);
         int followingCount = intent.getIntExtra("following", 0);
 
-        getSupportActionBar().setTitle(screen_name);
+        getSupportActionBar().setTitle("@"+screen_name);
 
         Bundle args = new Bundle();
 
@@ -95,11 +95,12 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
             ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
             tvName.setText(name);
             tvTagLine.setText(tagLine);
+            //tvTagLine.setText("fkdsjakfjadklfjalksfjklajfkajsfkljasklfjksaljflkasjfkalsjfklasjfklasjfklasjfklajsklfjsadlkfjdsklfjasklfjkalsdjfklasdjfkasdjfklasfjasdfjsakfjsadfjklasdjfklasdjflkasjflaksjflkasjfklasjfld;sajfasdjfkasfjasdjfklajfklasjfkasjfklasjflsadjflsajsljflasdjflkdjfdasjfd  Finally ended");
 
             tvFollowers.setText(followersCount + " Followers");
             tvFollowing.setText(followingCount + " Following" );
 
-            //Glide.with(this).load(profileURL).into(ivProfileImage);
+            Glide.with(this).load(profileURL).into(ivProfileImage);
         }
     }
 
