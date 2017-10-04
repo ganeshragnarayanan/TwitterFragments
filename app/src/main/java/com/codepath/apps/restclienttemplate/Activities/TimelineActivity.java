@@ -16,10 +16,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+import android.support.v4.app.Fragment;
 
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.fragments.EditNameDialogFragment;
 import com.codepath.apps.restclienttemplate.fragments1.HomeTimelineFragment;
+import com.codepath.apps.restclienttemplate.fragments1.MentionsTimelineFragment;
+import com.codepath.apps.restclienttemplate.fragments1.SmartFragmentStatePagerAdapter;
 import com.codepath.apps.restclienttemplate.fragments1.TweetsListFragment;
 import com.codepath.apps.restclienttemplate.fragments1.TweetsPagerAdapter;
 import com.codepath.apps.restclienttemplate.models.Tweet;
@@ -35,15 +38,17 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     String screenName;
     String imageURL;
     long userUID;
+    ViewPager vpPager;
 
 
     TweetsListFragment fragmentTweetsList;
 
-   // private SmartFragmentStatePagerAdapter adapterViewPager;
+   private SmartFragmentStatePagerAdapter adapterViewPager;
+
 
     // Extend from SmartFragmentStatePagerAdapter now instead for more dynamic ViewPager items
-   /* public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter {
-        private static int NUM_ITEMS = 3;
+    public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter {
+        private static int NUM_ITEMS = 2;
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -76,7 +81,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
             return "Page " + position;
         }
 
-    }*/
+    }
 
 
     @Override
@@ -90,6 +95,8 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         setSupportActionBar(toolbar);
 
         setupViews();
+
+
 
         //swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         // Setup refresh listener which triggers new data loading
@@ -145,12 +152,15 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         //getCurrentUser();
         // fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
 
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        vpPager = (ViewPager) findViewById(R.id.viewpager);
         vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
         //makeDelayedTweetRequests();
+
+        adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        vpPager.setAdapter(adapterViewPager);
 
     }
 
@@ -162,8 +172,12 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     public void getResult(String tweetString, Tweet tweetObj) {
 
         Log.d("debug", "getResult");
-        HomeTimelineFragment fragmentDemo = new HomeTimelineFragment();
-        fragmentDemo.fromMainActivity(tweetObj);
+        HomeTimelineFragment fragment = (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
+        fragment.fromMainActivity(tweetObj);
+        vpPager.setCurrentItem(0);
+
+        //HomeTimelineFragment fragmentDemo = new HomeTimelineFragment();
+        //fragmentDemo.fromMainActivity(tweetObj);
 
         /*tweets.add(0, tweetObj);
         tweetAdapter.notifyDataSetChanged();
