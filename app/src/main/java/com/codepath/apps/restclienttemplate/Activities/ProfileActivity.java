@@ -119,6 +119,8 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
         Glide.with(this).load(user.profileImageUrl).into(ivProfileImage);
     }
 
+
+
     @Override
     public void onTweetSelected(Tweet tweet) {
         Toast.makeText(this, tweet.body, Toast.LENGTH_SHORT);

@@ -27,8 +27,10 @@ import com.codepath.apps.restclienttemplate.Activities.TimelineActivity;
 import com.codepath.apps.restclienttemplate.Application.TwitterApp;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.codepath.apps.restclienttemplate.models.User;
 import com.codepath.apps.restclienttemplate.net.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,6 +47,12 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
     String dateSelected;
     private TwitterClient client;
+
+    ImageView ivImage;
+    TextView tvName;
+
+    String userGlobal;
+    String imageGlobal;
 
     public interface TweetSelectedListener {
         public void onTweetSelected(Tweet tweet);
@@ -110,11 +118,14 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
         final EditText etComposeTweet = (EditText) view.findViewById(R.id.etComposeTweet);
 
-        final ImageView ivImage = (ImageView) view.findViewById(R.id.ivImage);
-        final TextView tvName = (TextView) view.findViewById(R.id.tvName);
+        client = TwitterApp.getRestClient();
+        getCurrentUser();
 
-        Glide.with(this).load(imageURL).into(ivImage);
-        tvName.setText(userName);
+        ivImage = (ImageView) view.findViewById(R.id.ivImage);
+        tvName = (TextView) view.findViewById(R.id.tvName);
+
+        Glide.with(this).load(imageGlobal).into(ivImage);
+        tvName.setText(userGlobal);
 
         mEditText = (TextView) view.findViewById(R.id.mTextView);
 
@@ -162,6 +173,70 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
                 Log.d("debug", response.toString());
 
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("debug", responseString);
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
+                Log.d("debug", errorResponse.toString());
+                throwable.printStackTrace();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("debug", errorResponse.toString());
+                throwable.printStackTrace();
+            }
+        });
+    }
+
+    public void getCurrentUser() {
+        RequestParams params = new RequestParams();
+        Log.d("debug", "getCurrentUser");
+
+        client.getCurrentUser(params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                Log.d("debug", response.toString());
+                try {
+                    User user = User.fromJSON(response);
+                    /*userName = user.name;
+                    screenName = user.screenName;
+                    imageURL = user.profileImageUrl;
+                    userUID = user.uid;*/
+
+                    userGlobal = user.name;
+                    imageGlobal = user.profileImageUrl;
+                    /*Glide.with(this).load(user.profileImageUrl).into(ivImage);
+                    tvName.setText(user.name);*/
+
+                    Glide.with(getContext()).load(imageGlobal).into(ivImage);
+                    tvName.setText(userGlobal);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
+                Log.d("debug", response.toString());
+                try {
+                    User user = User.fromJSON(response.getJSONObject(0));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                super.onSuccess(statusCode, headers, responseString);
             }
 
             @Override
