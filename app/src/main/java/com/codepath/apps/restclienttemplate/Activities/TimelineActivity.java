@@ -39,6 +39,45 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     TweetsListFragment fragmentTweetsList;
 
+   // private SmartFragmentStatePagerAdapter adapterViewPager;
+
+    // Extend from SmartFragmentStatePagerAdapter now instead for more dynamic ViewPager items
+   /* public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter {
+        private static int NUM_ITEMS = 3;
+
+        public MyPagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
+
+        // Returns total number of pages
+        @Override
+        public int getCount() {
+            return NUM_ITEMS;
+        }
+
+        // Returns the fragment to display for that page
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0: // Fragment # 0 - This will show FirstFragment
+                    //return FirstFragment.newInstance(0, "Page # 1");
+                    return new HomeTimelineFragment();
+                case 1: // Fragment # 0 - This will show FirstFragment different title
+                    //return FirstFragment.newInstance(1, "Page # 2");
+                    return new MentionsTimelineFragment();
+                default:
+                    return null;
+            }
+        }
+
+        // Returns the page title for the top indicator
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return "Page " + position;
+        }
+
+    }*/
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

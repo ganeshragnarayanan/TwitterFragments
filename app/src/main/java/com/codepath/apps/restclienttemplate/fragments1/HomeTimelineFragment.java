@@ -11,6 +11,7 @@ import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
 import cz.msebera.android.httpclient.Header;
 
 //import static com.codepath.apps.restclienttemplate.R.id.swipeContainer;

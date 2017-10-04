@@ -65,6 +65,7 @@ public abstract  class TweetsListFragment extends Fragment implements TweetAdapt
 
         client = TwitterApp.getRestClient();
 
+
        /* RecyclerView.ItemDecoration itemDecoration = new
                 DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         rvTweets.addItemDecoration(itemDecoration);*/

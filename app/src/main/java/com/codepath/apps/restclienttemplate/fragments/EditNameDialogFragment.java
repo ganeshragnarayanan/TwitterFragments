@@ -24,7 +24,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.apps.restclienttemplate.Activities.TimelineActivity;
-import com.codepath.apps.restclienttemplate.Application.TwitterApp;
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.net.TwitterClient;
@@ -138,7 +137,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     }
 
     private void postTweet(final String tweet, final Context context) {
-        client = TwitterApp.getRestClient();
+        //client = TwitterApp.getRestClient();
         client.postTweet(tweet, new JsonHttpResponseHandler() {
 
             @Override
