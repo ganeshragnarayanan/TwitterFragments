@@ -40,10 +40,9 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     long userUID;
     ViewPager vpPager;
 
-
     TweetsListFragment fragmentTweetsList;
 
-   private SmartFragmentStatePagerAdapter adapterViewPager;
+    private SmartFragmentStatePagerAdapter adapterViewPager;
 
 
     // Extend from SmartFragmentStatePagerAdapter now instead for more dynamic ViewPager items
@@ -96,31 +95,10 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         setSupportActionBar(toolbar);
 
         setupViews();
-
-
-
-        //swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        // Setup refresh listener which triggers new data loading
-       /* swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-                tweetAdapter.notifyDataSetChanged();
-                scrollListener.resetState();
-
-            }
-        });*/
-        // Configure the refreshing colors
-        /*swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);*/
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        // getMenuInflater().inflate(R.menu.menu_search, menu);
         getMenuInflater().inflate(R.menu.menu_timeline, menu);
 
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -140,7 +118,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         runnableCode = new Runnable() {
             @Override
             public void run() {
-                // runs below code on main thread
                 onPopulateTimeline();
             }
         };
@@ -149,16 +126,11 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     public void setupViews() {
 
-
-        //getCurrentUser();
-        // fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
-
         vpPager = (ViewPager) findViewById(R.id.viewpager);
         vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager(), this));
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.sliding_tabs);
         tabLayout.setupWithViewPager(vpPager);
-        //makeDelayedTweetRequests();
 
         adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
@@ -176,81 +148,11 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         HomeTimelineFragment fragment = (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
         fragment.fromMainActivity(tweetObj);
         vpPager.setCurrentItem(0);
-
-        //HomeTimelineFragment fragmentDemo = new HomeTimelineFragment();
-        //fragmentDemo.fromMainActivity(tweetObj);
-
-        /*tweets.add(0, tweetObj);
-        tweetAdapter.notifyDataSetChanged();
-        linearLayoutManager.scrollToPositionWithOffset(0, 0);*/
-
     }
 
     public void onPopulateTimeline() {
 
-        /*tweets.clear();
-        tweetAdapter.notifyDataSetChanged();
-        scrollListener.resetState();*/
-
-        //populateTimeline(0);
     }
-
-    /*public void getCurrentUser() {
-        RequestParams params = new RequestParams();
-        Log.d("debug", "getCurrentUser");
-
-        client.getCurrentUser(params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("debug", response.toString());
-                try {
-                    User user = User.fromJSON(response);
-                    userName = user.name;
-                    screenName = user.screenName;
-                    imageURL = user.profileImageUrl;
-                    userUID = user.uid;
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("debug", response.toString());
-                try {
-                    User user = User.fromJSON(response.getJSONObject(0));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                super.onSuccess(statusCode, headers, responseString);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("debug", responseString);
-                throwable.printStackTrace();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-            }
-        });
-    }*/
-
 
     public void onComposeAction(MenuItem mi) {
         showEditDialog();

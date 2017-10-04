@@ -46,6 +46,10 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
     String dateSelected;
     private TwitterClient client;
 
+    public interface TweetSelectedListener {
+        public void onTweetSelected(Tweet tweet);
+    }
+
     TextView mEditText;
     private final TextWatcher mTextEditorWatcher = new TextWatcher() {
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -148,6 +152,7 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
                 try {
                     Tweet tweetObj = Tweet.fromJSON(response);
                     ((TimelineActivity) context).getResult(tweet, tweetObj);
+                    //((TweetSelectedListener) getActivity()).onTweetSelected(tweetObj);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
