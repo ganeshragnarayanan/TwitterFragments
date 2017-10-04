@@ -49,6 +49,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     // Extend from SmartFragmentStatePagerAdapter now instead for more dynamic ViewPager items
     public static class MyPagerAdapter extends SmartFragmentStatePagerAdapter {
         private static int NUM_ITEMS = 2;
+        private String tabTitles[] = new String[]{"Home", "Mentions"};
 
         public MyPagerAdapter(FragmentManager fragmentManager) {
             super(fragmentManager);
@@ -78,7 +79,7 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
         // Returns the page title for the top indicator
         @Override
         public CharSequence getPageTitle(int position) {
-            return "Page " + position;
+            return tabTitles[position];
         }
 
     }
