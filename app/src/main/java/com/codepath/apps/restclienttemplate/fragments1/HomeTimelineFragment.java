@@ -6,6 +6,12 @@ import android.util.Log;
 
 import com.codepath.apps.restclienttemplate.Application.TwitterApp;
 import com.codepath.apps.restclienttemplate.models.Tweet;
+import com.loopj.android.http.JsonHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import cz.msebera.android.httpclient.Header;
 
 //import static com.codepath.apps.restclienttemplate.R.id.swipeContainer;
 
@@ -30,7 +36,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
         insertTweet(tweet);
     }
 
-    /*private void populateTimeline(long max_id) {
+    public void populateTimeline(long max_id) {
         RequestParams params = new RequestParams();
         params.put("count", 25);
         params.put("since_id", 1);
@@ -72,7 +78,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
                 //swipeContainer.setRefreshing(false);
             }
         });
-    }*/
+    }
 
 
 }

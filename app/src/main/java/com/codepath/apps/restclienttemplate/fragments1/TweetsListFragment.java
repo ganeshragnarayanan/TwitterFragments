@@ -18,16 +18,11 @@ import com.codepath.apps.restclienttemplate.adapters.TweetAdapter;
 import com.codepath.apps.restclienttemplate.models.Tweet;
 import com.codepath.apps.restclienttemplate.net.TwitterClient;
 import com.codepath.apps.restclienttemplate.utils.EndlessRecyclerViewScrollListener;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
-
-import cz.msebera.android.httpclient.Header;
 
 //import static com.codepath.apps.restclienttemplate.R.id.swipeContainer;
 
@@ -35,7 +30,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by GANESH on 10/3/17.
  */
 
-public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAdapterListener {
+public abstract  class TweetsListFragment extends Fragment implements TweetAdapter.TweetAdapterListener {
     public interface TweetSelectedListener {
         public void onTweetSelected(Tweet tweet);
     }
@@ -140,140 +135,9 @@ public class TweetsListFragment extends Fragment implements TweetAdapter.TweetAd
         linearLayoutManager.scrollToPositionWithOffset(0, 0);
 
     }
-    public void populateTimeline(long max_id) {
-        RequestParams params = new RequestParams();
-        params.put("count", 25);
-        params.put("since_id", 1);
-        Log.d("debug", "populateTimeLine Home");
-        //client = TwitterApp.getRestClient();
-        if (max_id != 0) {
-            params.put("max_id", max_id);
-        }
-        client.getHomeTimeline(params, new JsonHttpResponseHandler() {
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("debug", response.toString());
-            }
+    // Abstract method to be overridden
+    protected abstract void populateTimeline(long maxId);
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("debug", "hometimeline success 2");
-                addItems(response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("debug", responseString);
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-        });
-    }
-
-    public void populateMentionsTimeline(long max_id) {
-        RequestParams params = new RequestParams();
-        params.put("count", 25);
-        params.put("since_id", 1);
-        Log.d("debug", "populateTimeLine Mentions");
-
-        if (max_id != 0) {
-            params.put("max_id", max_id);
-        }
-        client.getMentionsTimeline(params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("debug", response.toString());
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                Log.d("debug", "mentionstimeline success 2");
-                addItems(response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("debug", responseString);
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-        });
-    }
-
-    public void populateUsersTimeline(long max_id) {
-        String screenName = getArguments().getString("screen_name");
-        long uid = getArguments().getLong("uid");
-
-        RequestParams params = new RequestParams();
-        params.put("count", 25);
-        params.put("since_id", 1);
-
-        if (max_id != 0) {
-            params.put("max_id", max_id);
-        }
-        client.getUserTimeline(screenName, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                Log.d("debug", response.toString());
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                addItems(response);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("debug", responseString);
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Log.d("debug", errorResponse.toString());
-                throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
-            }
-        });
-    }
 }
 
