@@ -53,21 +53,18 @@ public class MentionsTimelineFragment extends TweetsListFragment {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("debug", responseString);
                 throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 Log.d("debug", errorResponse.toString());
                 throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("debug", errorResponse.toString());
                 throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
             }
         });
     }

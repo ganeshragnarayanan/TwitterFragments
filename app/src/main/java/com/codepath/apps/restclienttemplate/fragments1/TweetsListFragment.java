@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -60,15 +61,12 @@ public abstract  class TweetsListFragment extends Fragment implements TweetAdapt
         linearLayoutManager = new LinearLayoutManager(getContext());
         rvTweets.setLayoutManager(linearLayoutManager);
 
-       /* vpPager = (ViewPager) v.findViewById(R.id.viewpager);
-        int i = vpPager.getCurrentItem();*/
-
         client = TwitterApp.getRestClient();
 
 
-       /* RecyclerView.ItemDecoration itemDecoration = new
-                DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
-        rvTweets.addItemDecoration(itemDecoration);*/
+       RecyclerView.ItemDecoration itemDecoration = new
+               DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL);
+        rvTweets.addItemDecoration(itemDecoration);
 
 
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
@@ -98,11 +96,6 @@ public abstract  class TweetsListFragment extends Fragment implements TweetAdapt
                 tweets.add(tweet);
                 tweetAdapter.notifyItemInserted(tweets.size() - 1);
                 maxTweetID = minTweetID;
-
-                //Log.d("debug", "maxTweetID");
-                //Log.d("debug", Long.toString(maxTweetID));
-                //swipeContainer.setRefreshing(false);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -118,14 +111,6 @@ public abstract  class TweetsListFragment extends Fragment implements TweetAdapt
     }
 
     public void loadNextDataFromApi(int offset) {
-
-        /*int i = vpPager.getCurrentItem();
-        Log.d("debug", "currentpage");
-        Log.d("debug", Integer.toString(i));*/
-
-       // Fragment f = getActivity().getFragmentManager().findFragmentById(R.id.fragment_container);
-
-
         populateTimeline(maxTweetID-1);
 
     }

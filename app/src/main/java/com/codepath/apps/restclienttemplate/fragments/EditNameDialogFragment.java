@@ -88,11 +88,6 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
         c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
     }
 
-    /*public interface EditNameDialogListener {
-        void onFinishEditDialog(String inputText);
-    }*/
-
-
     public EditNameDialogFragment() {
     }
 
@@ -167,14 +162,11 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
 
                 try {
                     Tweet tweetObj = Tweet.fromJSON(response);
-                    //((TimelineActivity) context).getResult(tweet, tweetObj);
 
                     //newly added
                     EditNameDialogListener listener = (EditNameDialogListener) context;
                     listener.onFinishEditDialog(tweetObj);
 
-
-                    //((TweetSelectedListener) getActivity()).onTweetSelected(tweetObj);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -217,15 +209,9 @@ public class EditNameDialogFragment extends DialogFragment implements DatePicker
                 Log.d("debug", response.toString());
                 try {
                     User user = User.fromJSON(response);
-                    /*userName = user.name;
-                    screenName = user.screenName;
-                    imageURL = user.profileImageUrl;
-                    userUID = user.uid;*/
 
                     userGlobal = user.name;
                     imageGlobal = user.profileImageUrl;
-                    /*Glide.with(this).load(user.profileImageUrl).into(ivImage);
-                    tvName.setText(user.name);*/
 
                     Glide.with(getContext()).load(imageGlobal).into(ivImage);
                     tvName.setText(userGlobal);

@@ -45,9 +45,6 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
         toolbar.setBackgroundColor(Color.rgb(81, 155,211));
         setSupportActionBar(toolbar);
 
-        //toolbar.setTitle("hola");
-        //toolbar.setTitle();
-
         Intent intent = getIntent();
         long uid = intent.getLongExtra("uid", 0);
         String screen_name = intent.getStringExtra("screen_name");
@@ -79,8 +76,6 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         User user = User.fromJSON(response);
-                        //getSupportActionBar().setTitle(user.screenName);
-                        //getSupportActionBar().setTitle("screen_name");
                         populateUserHeadline(user);
                         getSupportActionBar().setTitle("@" + user.screenName);
                     } catch (JSONException e) {
@@ -98,7 +93,6 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
             ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
             tvName.setText(name);
             tvTagLine.setText(tagLine);
-            //tvTagLine.setText("fkdsjakfjadklfjalksfjklajfkajsfkljasklfjksaljflkasjfkalsjfklasjfklasjfklasjfklajsklfjsadlkfjdsklfjasklfjkalsdjfklasdjfkasdjfklasfjasdfjsakfjsadfjklasdjfklasdjflkasjflaksjflkasjfklasjfld;sajfasdjfkasfjasdjfklajfklasjfkasjfklasjflsadjflsajsljflasdjflkdjfdasjfd  Finally ended");
 
             tvFollowers.setText(followersCount + " Followers");
             tvFollowing.setText(followingCount + " Following" );

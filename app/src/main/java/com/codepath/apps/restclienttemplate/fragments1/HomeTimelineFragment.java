@@ -33,7 +33,6 @@ public class HomeTimelineFragment extends TweetsListFragment {
     }
 
     public void fromMainActivity(Tweet tweet) {
-        Log.d("debug", "fromMainActivity");
         insertTweet(tweet);
     }
 
@@ -41,7 +40,7 @@ public class HomeTimelineFragment extends TweetsListFragment {
         RequestParams params = new RequestParams();
         params.put("count", 25);
         params.put("since_id", 1);
-        Log.d("debug", "populateTimeLine Home");
+
         if (max_id != 0) {
             params.put("max_id", max_id);
         }
@@ -62,21 +61,18 @@ public class HomeTimelineFragment extends TweetsListFragment {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.d("debug", responseString);
                 throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
                 Log.d("debug", errorResponse.toString());
                 throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 Log.d("debug", errorResponse.toString());
                 throwable.printStackTrace();
-                //swipeContainer.setRefreshing(false);
             }
         });
     }

@@ -13,7 +13,6 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -136,14 +135,11 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     }
 
-    public void loadNextDataFromApi(int offset) {
-        /*populateTimeline(maxTweetID-1);*/
-    }
+
 
     /* callback for the filters dialog */
     public void getResult(String tweetString, Tweet tweetObj) {
 
-        Log.d("debug", "getResult");
         HomeTimelineFragment fragment = (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
         fragment.fromMainActivity(tweetObj);
         vpPager.setCurrentItem(0);
