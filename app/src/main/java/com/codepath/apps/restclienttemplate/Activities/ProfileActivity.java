@@ -59,7 +59,9 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
         int followersCount = intent.getIntExtra("followers", 0);
         int followingCount = intent.getIntExtra("following", 0);
 
-        getSupportActionBar().setTitle("@"+screen_name);
+        if (uid != 0) {
+            getSupportActionBar().setTitle("@" + screen_name);
+        }
 
         Bundle args = new Bundle();
 
@@ -80,6 +82,7 @@ public class ProfileActivity extends AppCompatActivity  implements TweetsListFra
                         //getSupportActionBar().setTitle(user.screenName);
                         //getSupportActionBar().setTitle("screen_name");
                         populateUserHeadline(user);
+                        getSupportActionBar().setTitle("@" + user.screenName);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

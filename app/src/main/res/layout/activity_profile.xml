@@ -71,8 +71,8 @@
     <View
         android:id="@+id/vHorizontal"
         android:layout_width="fill_parent"
-        android:layout_height="20dip"
-        android:background="#FF00FF00"
+        android:layout_height="10dip"
+        android:background="#505050"
         android:layout_below="@+id/llUserHeader"/>
 
     <FrameLayout

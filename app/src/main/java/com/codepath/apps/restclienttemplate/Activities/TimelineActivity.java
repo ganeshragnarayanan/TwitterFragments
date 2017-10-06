@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -15,8 +16,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
-import android.support.v4.app.Fragment;
 
 import com.codepath.apps.restclienttemplate.R;
 import com.codepath.apps.restclienttemplate.fragments.EditNameDialogFragment;
@@ -177,7 +176,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
 
     @Override
     public void onTweetSelected(Tweet tweet) {
-        Toast.makeText(this, tweet.body, Toast.LENGTH_SHORT);
         Intent i = new Intent(this, ProfileActivity.class);
         i.putExtra("uid", tweet.user.uid);
         i.putExtra("screen_name", tweet.user.screenName);
@@ -193,7 +191,6 @@ public class TimelineActivity extends AppCompatActivity implements TweetsListFra
     @Override
     public void onFinishEditDialog(Tweet tweetObj) {
 
-        Toast.makeText(this, "Hi, " , Toast.LENGTH_SHORT).show();
         HomeTimelineFragment fragment = (HomeTimelineFragment) adapterViewPager.getRegisteredFragment(0);
         fragment.fromMainActivity(tweetObj);
         vpPager.setCurrentItem(0);
